@@ -2,14 +2,35 @@
 
 namespace HashTable_implimentation
 {
-    class HashTable<T>
+    class HashTable<X, Y>
     {
-        public HList<T>[] table;
-        Func<int, int> hash;
-        public HashTable(Func<int, int> hash, int range)
+        public HList<X>[] table;
+        Func<X, Y> index;
+        Func<Y, int> hash;
+        public HashTable(Func<X, Y> index, Func<Y, int> hash, int range)
         {
+            this.index = index;
             this.hash = hash;
-            table = new HList<T>[range];
+            table = new HList<X>[range];
+            for (int i = 0; i < table.Length; i++)
+            {
+                table[i] = new HList<X>();
+            }
         }
+
+        public bool Add(X value) => table[hash(index(value)) % table.Length].Append(value, index(value).ToString());
+
+        public X Get(Y key) => table[hash(key) % table.Length].Get(key.ToString());
+
+        public X Remove(Y key) => table[hash(key) % table.Length].Remove(key.ToString());
+
+        public void Print()
+        {
+            for (int i = 0; i < table.Length; i++)
+            {
+                table[i].Print(i);
+            }
+        }
+
     }
 }

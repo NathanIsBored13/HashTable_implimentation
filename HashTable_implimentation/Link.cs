@@ -2,34 +2,55 @@
 
 namespace HashTable_implimentation
 {
-    class Link<T>
+    internal class Link<X>
     {
-        T value;
-        Link<T> child;
-        public Link(T value)
+        X value;
+        string key;
+        Link<X> child;
+        public Link(X value, string key)
         {
             this.value = value;
+            this.key = key;
+            child = null;
         }
 
-        public void Push (T value)
+        public bool Append (X value, string key)
         {
-            if (child == null) child = new Link<T>(value);
-            else child.Push(value);
+            bool ret;
+            if (key == this.key) ret = false;
+            else if (child == null)
+            {
+                child = new Link<X>(value, key);
+                ret = true;
+            }
+            else ret = child.Append(value, key);
+            return ret;
         }
 
-        public Tuple<T, bool> Remove(Func<T, bool> check)
+        public X Get(string key) => key == this.key ? value : child == null ? default : child.Get(key);
+
+        public Tuple<X, bool, Link<X>> Remove(string key)
         {
-            Tuple<T, bool> ret;
-            if (check(value)) ret = Tuple.Create(value, true);
-            else if (child == null) ret = Tuple.Create<T, bool>(default, false);
+            Tuple<X, bool, Link<X>> ret;
+            if (key == this.key) ret = Tuple.Create(value, true, child);
+            else if (child == null) ret = Tuple.Create<X, bool, Link<X>>(default, true, null);
             else
             {
-                ret = child.Remove(check);
-                if (ret.Item2) child = child.GetChild();
+                ret = child.Remove(key);
+                if (ret.Item2)
+                {
+                    child = ret.Item3;
+                    ret = Tuple.Create<X, bool, Link<X>>(ret.Item1, false,  null);
+                }
             }
             return ret;
         }
 
-        public Link<T> GetChild() => child;
+        public string Print(string value)
+        {
+            value += string.Format("{0}{1}", value.Length == 0 ? "" : ", ", this.value);
+            if (child != null) value = child.Print(value);
+            return value;
+        }
     }
 }
