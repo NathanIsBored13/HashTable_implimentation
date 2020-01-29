@@ -18,11 +18,9 @@ namespace HashTable_implimentation
             return ret;
         }
 
-        public X Get(string key) => head == null ? default : head.Get(key);
-
-        public X Remove(string key)
+        public bool Remove(string key)
         {
-            Tuple<X, bool, Link<X>> ret = Tuple.Create<X, bool, Link<X>>(default, false, null);
+            Tuple<bool, bool, Link<X>> ret = Tuple.Create<bool, bool, Link<X>>(false, false, null);
             if (head != null)
             {
                 ret = head.Remove(key);
@@ -30,6 +28,8 @@ namespace HashTable_implimentation
             }
             return ret.Item1;
         }
+
+        public X Get(string key) => head == null ? default : head.Get(key);
 
         public void Print(int index)
         {

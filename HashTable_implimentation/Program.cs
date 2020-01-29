@@ -22,13 +22,12 @@ namespace HashTable_implimentation
                         if (table.Add(Tuple.Create(input[1], int.Parse(input[2])))) Console.WriteLine("item added sucsesfuly");
                         else Console.WriteLine("item could not be added");
                         break;
+                    case "remove":
+                        if (table.Remove(input[1])) Console.WriteLine("item removed sucsesfuly");
+                        else Console.WriteLine("item could not be removed");
+                        break;
                     case "get":
                         ret = table.Get(input[1]);
-                        if (ret == default) Console.WriteLine("item does not exist");
-                        else Console.WriteLine(ret);
-                        break;
-                    case "remove":
-                        ret = table.Remove(input[1]);
                         if (ret == default) Console.WriteLine("item does not exist");
                         else Console.WriteLine(ret);
                         break;

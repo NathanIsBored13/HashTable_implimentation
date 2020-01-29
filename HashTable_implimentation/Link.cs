@@ -29,18 +29,18 @@ namespace HashTable_implimentation
 
         public X Get(string key) => key == this.key ? value : child == null ? default : child.Get(key);
 
-        public Tuple<X, bool, Link<X>> Remove(string key)
+        public Tuple<bool, bool, Link<X>> Remove(string key)
         {
-            Tuple<X, bool, Link<X>> ret;
-            if (key == this.key) ret = Tuple.Create(value, true, child);
-            else if (child == null) ret = Tuple.Create<X, bool, Link<X>>(default, true, null);
+            Tuple<bool, bool, Link<X>> ret;
+            if (key == this.key) ret = Tuple.Create(true, true, child);
+            else if (child == null) ret = Tuple.Create<bool, bool, Link<X>>(false, true, null);
             else
             {
                 ret = child.Remove(key);
                 if (ret.Item2)
                 {
                     child = ret.Item3;
-                    ret = Tuple.Create<X, bool, Link<X>>(ret.Item1, false,  null);
+                    ret = Tuple.Create<bool, bool, Link<X>>(ret.Item1, false,  null);
                 }
             }
             return ret;

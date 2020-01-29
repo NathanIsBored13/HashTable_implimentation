@@ -20,9 +20,9 @@ namespace HashTable_implimentation
 
         public bool Add(X value) => table[hash(index(value)) % table.Length].Append(value, index(value).ToString());
 
-        public X Get(Y key) => table[hash(key) % table.Length].Get(key.ToString());
+        public bool Remove(Y key) => table[hash(key) % table.Length].Remove(key.ToString());
 
-        public X Remove(Y key) => table[hash(key) % table.Length].Remove(key.ToString());
+        public X Get(Y key) => table[hash(key) % table.Length].Get(key.ToString());
 
         public void Print()
         {
