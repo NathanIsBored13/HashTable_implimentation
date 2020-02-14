@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 
 namespace HashTable_implimentation
 {
@@ -6,7 +7,7 @@ namespace HashTable_implimentation
     {
         static void Main(string[] args)
         {
-            HashTable<Tuple<string, int>, string> table = new HashTable<Tuple<string, int>, string>(x => x.Item1, x => char.ToUpper(x[0]) - 65, 26);
+            HashTable<Tuple<string, int>, string> table = new HashTable<Tuple<string, int>, string>(x => x.Item1, x => x.Select(y => char.ToUpper(y) - 64).Sum(), 10);
             bool exit = false;
             do
             {
